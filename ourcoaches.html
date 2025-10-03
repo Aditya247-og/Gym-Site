@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JB Total Fitness</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between;">
+    <h1>JB Total Fitness</h1>
+    <nav style="display: flex;">
+      <a href="/">Home</a>
+      <a href="/#about">About</a>
+      <a href="/ourcoaches.html">Our Coaches</a>
+      <a href="/pakage.html">Package</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/login.html">Login/Signup</a>
+      <a href="/location.html">Location</a>
+      <a href="/review.html">Reviews</a>
+    </nav>
+  </header>
+
+  <!-- Coaches -->
+  <section class="section hidden" id="coaches">
+    <h2>Meet Our Coaches</h2>
+    <div class="coaches">
+      <div class="coach-card">
+        <h3>Avinash Sir</h3>
+        <p>Strength & Conditioning Expert with years of experience in body transformation.</p>
+      </div>
+      <div class="coach-card">
+        <h3>Sandy Sir</h3>
+        <p>Certified Personal Trainer specializing in weight loss and muscle gain.</p>
+      </div>
+      <div class="coach-card">
+        <h3>Bhoir Sir</h3>
+        <p>Professional Fitness Coach focusing on endurance, flexibility, and functional training.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 JB Total Fitness | Designed with 💪</p>
+    <p>Website made by Aditya</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    
+    // 👇 Add scroll animation for hidden sections
+    const hiddenSections = document.querySelectorAll('.hidden');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target); // optional: only animate once
+        }
+      });
+    }, { threshold: 0.2 });
+
+    hiddenSections.forEach(section => observer.observe(section));
+  </script>
+
+
+</body>
+
+</html>

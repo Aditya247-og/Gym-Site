@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Signup - JB Total Fitness</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    body {
+      height: 100px;
+      font-family: Arial, sans-serif;
+      background: #070723;
+      background-image: url(loginimg.jpg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #0f172a;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #facc15;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #38bdf8;
+      color: white;
+    }
+
+    .toggle-link {
+      margin-top: 15px;
+      display: block;
+      color: #38bdf8;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: lightgreen;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <h2 id="form-title">Login</h2>
+    <form id="authForm">
+ 
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <span class="toggle-link" onclick="toggleForm()">Don't have an account? Signup</span>
+    <p id="message"></p>
+  </div>
+
+<script>
+  const formTitle = document.getElementById("form-title");
+  const form = document.getElementById("authForm");
+  const toggleLink = document.querySelector(".toggle-link");
+  const message = document.getElementById("message");
+
+  let isLogin = true;
+
+  function toggleForm() {
+    message.innerText = "";
+    if (isLogin) {
+      formTitle.innerText = "Signup";
+      form.innerHTML = `
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirm" placeholder="Confirm Password" required>
+        <button type="submit">Signup</button>
+      `;
+      toggleLink.innerText = "Already have an account? Login";
+    } else {
+      formTitle.innerText = "Login";
+      form.innerHTML = `
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      `;
+      toggleLink.innerText = "Don't have an account? Signup";
+    }
+    isLogin = !isLogin;
+  }
+
+  // Handle form submission
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    message.innerText = "";
+
+    if (isLogin) {
+      // LOGIN
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          message.innerText = "✅ Login successful!";
+          message.className = "success";
+          // redirect
+          window.location.href = "/";
+        } else {
+          message.innerText = "❌ " + data.message;
+          message.className = "error";
+        }
+      } catch (err) {
+        message.innerText = "❌ Server error!";
+        message.className = "error";
+      }
+
+    } else {
+      // SIGNUP
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+
+      if (password !== confirm) {
+        message.innerText = "❌ Passwords do not match!";
+        message.className = "error";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          message.innerText = "✅ Signup successful! You can now login.";
+          message.className = "success";
+          toggleForm();
+        } else {
+          message.innerText = "❌ " + data.message;
+          message.className = "error";
+        }
+      } catch (err) {
+        message.innerText = "❌ Server error!";
+        message.className = "error";
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JB Total Fitness</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .packages {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .package-card {
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 15px;
+      width: 280px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, background 0.3s;
+      text-align: center;
+    }
+
+    .package-card:hover {
+      transform: translateY(-10px);
+      background: #334155;
+    }
+
+    .package-card h3 {
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
+
+    .package-card p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #facc15;
+    }
+
+    .package-card ul {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .package-card button {
+      background: #facc15;
+      border: none;
+      padding: 12px 20px;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .package-card button:hover {
+      background: #38bdf8;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between;">
+    <h1>JB Total Fitness</h1>
+    <nav style="display: flex; gap: 15px;">
+      <a href="/">Home</a>
+      <a href="/#about">About</a>
+      <a href="/ourcoaches.html">Our Coaches</a>
+      <a href="/pakage.html">Package</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/login.html">Login/Signup</a>
+      <a href="/location.html">Location</a>
+      <a href="/review.html">Reviews</a>
+    </nav>
+  </header>
+
+  <!-- ✅ Packages -->
+  <section class="section hidden" id="packages">
+    <h2>Our Membership Packages</h2>
+    <div class="packages">
+      <div class="package-card">
+        <h3>Monthly Package</h3>
+        <p>₹1,200 per month</p>
+        <ul>
+          <li>Unlimited Gym Access</li>
+          <li>Personal Training Sessions</li>
+          <li>Diet & Nutrition Guidance</li>
+        </ul>
+        <button onclick="startMembership('Monthly Package')">Start Membership</button>
+      </div>
+
+      <div class="package-card">
+        <h3>Yearly Package</h3>
+        <p>₹12,000 per year</p>
+        <ul>
+          <li>Unlimited Gym Access</li>
+          <li>Personal Training + Special Workshops</li>
+          <li>Free Diet Consultation</li>
+          <li>Exclusive Fitness Events</li>
+        </ul>
+        <button onclick="startMembership('Yearly Package')">Start Membership</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 JB Total Fitness | Designed with 💪</p>
+    <p>Website made by Aditya</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Scroll animations
+    const hiddenSections = document.querySelectorAll('.hidden');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    hiddenSections.forEach(section => observer.observe(section));
+
+    // ✅ Membership logic
+    function startMembership(packageName) {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+
+      if (!loggedInUser) {
+        alert("❌ Please login/signup first to start membership!");
+        window.location.href = "/login.html"; // redirect to login page
+        return;
+      }
+
+      // Save membership info
+      localStorage.setItem("membership", packageName);
+      alert(`✅ Congratulations! You have started the ${packageName}.`);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - JB Total Fitness</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between;">
+    <h1>JB Total Fitness</h1>
+    <nav style="display: flex; gap: 15px;">
+      <a href="/">Home</a>
+      <a href="/#about">About</a>
+      <a href="/ourcoaches.html">Our Coaches</a>
+      <a href="/pakage.html">Package</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/login.html">Login/Signup</a>
+      <a href="/location.html">Location</a>
+      <a href="/review.html">Reviews</a>
+    </nav>
+  </header>
+
+
+  <!-- Contact Section -->
+  <section class="section" id="contact" style="margin-top:80px;">
+    <h2>Contact Us</h2>
+    <p>Fill out the form below and we’ll get back to you soon!</p>
+    <form id="contactForm">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="message">Your Message:</label>
+      <textarea id="message" rows="4" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 JB Total Fitness | Designed with 💪</p>
+    <p>Website made by Aditya</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+      };
+
+      const res = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        alert("Thank you! Your message has been saved ✅");
+        this.reset();
+      } else {
+        alert("❌ Something went wrong: " + result.error);
+      }
+    });
+  </script>
+</body>
+
+</html>

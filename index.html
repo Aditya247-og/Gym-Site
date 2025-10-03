@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JB Total Fitness</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between;">
+    <h1>JB Total Fitness</h1>
+    <nav style="display: flex; gap: 15px;">
+      <a href="/">Home</a>
+      <a href="/#about">About</a>
+      <a href="/ourcoaches.html">Our Coaches</a>
+      <a href="/pakage.html">Package</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/login.html">Login/Signup</a>
+      <a href="/location.html">Location</a>
+      <a href="/review.html">Reviews</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Transform Your Body & Mind</h2>
+      <p>Welcome to JB Total Fitness – Where Strength Meets Dedication</p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section hidden" id="about">
+    <h2>About Us</h2>
+    <p>
+      At JB Total Fitness, we believe fitness is not just about the body,
+      but also about building discipline, strength, and confidence.
+      Our state-of-the-art gym and expert coaches ensure you achieve your fitness goals in the best way possible.
+    </p>
+    <p>
+      We offer a wide range of services including personalized workout plans, 
+      group training sessions, yoga classes, nutrition guidance, 
+      and body transformation programs. Whether you are a beginner or an advanced athlete, 
+      our team will guide you every step of the way.
+    </p>
+    <p>
+      Our vision is to create a fitness community where everyone feels motivated, supported, 
+      and empowered to push beyond their limits. 
+      At JB Total Fitness, you are not just joining a gym – you are joining a family.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 JB Total Fitness | Designed with 💪</p>
+    <p>Website made by Aditya</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 👇 Add scroll animation for hidden sections
+    const hiddenSections = document.querySelectorAll('.hidden');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target); // optional: only animate once
+        }
+      });
+    }, { threshold: 0.2 });
+
+    hiddenSections.forEach(section => observer.observe(section));
+  </script>
+
+</body>
+</html>
